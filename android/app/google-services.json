@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1046496971802",
+    "project_id": "mdrmobile-98f79",
+    "storage_bucket": "mdrmobile-98f79.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046496971802:android:f9fb90b8be53be4c8b15a3",
+        "android_client_info": {
+          "package_name": "com.example.mdr_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJcxeweg2DS4LcuJxcpv5yCA71M0TIx4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

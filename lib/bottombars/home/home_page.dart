@@ -1,77 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:mdr_mobile/bottombars/home/severity.dart';
-import 'package:mdr_mobile/bottombars/home/days_filter.dart';
-import 'package:mdr_mobile/bottombars/home/summary.dart';
+import 'package:mdr_mobile/bottombars/home/dashboards/dashboard_page.dart';
+import 'package:mdr_mobile/bottombars/home/endpoints/endpoint_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+// สมมุติว่า DashboardPage และ EndpointPage ถูกสร้างไว้แล้ว
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
+class HomePage extends StatelessWidget {
+  final int subPageIndex; // 0: Dashboard, 1: Endpoint
 
-class _HomePageState extends State<HomePage> {
-  int? selectedDays = 1; // ค่าเริ่มต้น: 1 วัน
-  DateTime? selectedStartDate;
-  DateTime? selectedEndDate;
-
-  void updateFilter(int? days, {DateTime? startDate, DateTime? endDate}) {
-    setState(() {
-      if (days != null) {
-        selectedDays = days;
-        selectedStartDate = null;
-        selectedEndDate = null;
-      } else if (startDate != null && endDate != null) {
-        selectedDays = null;
-        selectedStartDate = startDate;
-        selectedEndDate = endDate;
-      }
-    });
-  }
+  const HomePage({Key? key, required this.subPageIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 🔹 ใช้ DaysFilter ที่รองรับช่วงวัน
-                DaysFilter(
-                  selectedDays: selectedDays,
-                  selectedStartDate: selectedStartDate,
-                  selectedEndDate: selectedEndDate,
-                  onFilterChanged: updateFilter,
-                ),
-                const SizedBox(height: 20),
-
-                // 🔹 Dashboard
-                const Text(
-                  "Dashboard",
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-                ),
-                Severity(
-                  selectedDays: selectedDays,
-                  selectedStartDate: selectedStartDate,
-                  selectedEndDate: selectedEndDate,
-                ),
-
-                const SizedBox(height: 20),
-
-                // 🔹 Summary Actions
-                Summary(
-                  selectedDays: selectedDays,
-                  selectedStartDate: selectedStartDate,
-                  selectedEndDate: selectedEndDate,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+    // เลือกแสดงหน้าตาม subPageIndex
+    switch (subPageIndex) {
+      case 0:
+        return DashboardPage();
+      case 1:
+        return EndpointPage();
+      default:
+        return Container();
+    }
   }
 }

@@ -32,29 +32,52 @@ class Summary extends StatelessWidget {
       Timestamp startTimestamp = Timestamp.fromDate(startDate);
       Timestamp endTimestamp = Timestamp.fromDate(endDate);
 
-      QuerySnapshot severitySnapshot = await _firestore
-          .collection('severity')
-          .where('date', isGreaterThanOrEqualTo: startTimestamp)
-          .where('date', isLessThanOrEqualTo: endTimestamp)
+      // เปลี่ยน collection จาก 'severity' เป็น 'generated'
+      QuerySnapshot snapshot = await _firestore
+          .collection('generated')
+          .where('close', isGreaterThanOrEqualTo: startTimestamp)
+          .where('close', isLessThanOrEqualTo: endTimestamp)
           .get();
 
-      for (var doc in severitySnapshot.docs) {
+      for (var doc in snapshot.docs) {
         var data = doc.data() as Map<String, dynamic>;
 
-        totalBlocked += _parseInt(data["blocked"]);
-        totalDetected += _parseInt(data["detected"]);
+        // ดึงข้อมูลจาก action: 1 = Blocked, 2 = Detected
+        int actionValue = _parseInt(data["action"]);
+        if (actionValue == 1) {
+          totalBlocked++;
+        } else if (actionValue == 2) {
+          totalDetected++;
+        }
 
-        String severityLevel = data["severity"] ?? "";
-        int count = _parseInt(data["count"]);
+        // ดึงข้อมูล severity ที่เป็นตัวเลขแล้วแปลงเป็น label
+        int severityValue = _parseInt(data["severity"]);
+        String severityLabel = "";
+        switch (severityValue) {
+          case 1:
+            severityLabel = "Low";
+            break;
+          case 2:
+            severityLabel = "Medium";
+            break;
+          case 3:
+            severityLabel = "High";
+            break;
+          case 4:
+            severityLabel = "Critical";
+            break;
+          default:
+            severityLabel = "";
+        }
 
-        if (severityLevel == "Critical") {
-          criticalCount += count;
-        } else if (severityLevel == "High") {
-          highCount += count;
-        } else if (severityLevel == "Medium") {
-          mediumCount += count;
-        } else if (severityLevel == "Low") {
-          lowCount += count;
+        if (severityLabel == "Critical") {
+          criticalCount++;
+        } else if (severityLabel == "High") {
+          highCount++;
+        } else if (severityLabel == "Medium") {
+          mediumCount++;
+        } else if (severityLabel == "Low") {
+          lowCount++;
         }
       }
     } catch (e) {
@@ -116,7 +139,11 @@ class Summary extends StatelessWidget {
           children: [
             _buildSummaryActionsCard("SUMMARY ACTIONS", blocked, detected, actionChartData),
             _buildSummaryCard(
-                "SUMMARY INCIDENT", critical + high + medium + low, incidentChartData, [Colors.red, Colors.orange, Colors.lightBlueAccent.shade700, Colors.green]),
+              "SUMMARY INCIDENT", 
+              critical + high + medium + low, 
+              incidentChartData, 
+              [Colors.red, Colors.orange, Colors.lightBlueAccent.shade700, Colors.green]
+            ),
           ],
         );
       },
@@ -127,9 +154,9 @@ class Summary extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 3,
-      margin: const EdgeInsets.all(20),
+      margin:  EdgeInsets.symmetric(horizontal: 20, vertical:12),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding:  EdgeInsets.all(12),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -171,9 +198,9 @@ class Summary extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 3,
-      margin: const EdgeInsets.all(20),
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical:12),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding:  EdgeInsets.all(12),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

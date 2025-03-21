@@ -78,14 +78,17 @@ class _DaysFilterState extends State<DaysFilter> {
                 });
                 widget.onFilterChanged(1);
               },
-              child: _buildMainButton("Filter", isFilterActive ? Colors.green : Colors.grey[300]!, Colors.white),
+              child: _buildMainButton("Filter", 
+              isFilterActive ? Colors.green : Colors.white,
+              isFilterActive ? Colors.white : Colors.black,
+               ),
             ),
             const SizedBox(width: 8),
             GestureDetector(
               onTap: () => _selectDateRange(context),
               child: _buildMainButton(
                 "Calendar",
-                isCalendarActive ? Colors.green : Colors.grey[300]!,
+                isCalendarActive ? Colors.green : Colors.white,
                 isCalendarActive ? Colors.white : Colors.black,
               ),
             ),
@@ -149,7 +152,7 @@ class _DaysFilterState extends State<DaysFilter> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
         decoration: BoxDecoration(
-          color: selectedDays == value ? Colors.green : Colors.grey[300],
+          color: selectedDays == value ? Colors.green : Colors.white,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(

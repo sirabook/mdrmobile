@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
-class IncidentCard extends StatefulWidget {
+class IncidentsCard extends StatefulWidget {
   final Map<String, dynamic> data;
 
-  const IncidentCard({Key? key, required this.data}) : super(key: key);
+  const IncidentsCard({Key? key, required this.data}) : super(key: key);
 
   @override
-  _IncidentCardState createState() => _IncidentCardState();
+  _IncidentsCardState createState() => _IncidentsCardState();
 }
 
-class _IncidentCardState extends State<IncidentCard> {
+class _IncidentsCardState extends State<IncidentsCard> {
   bool isExpanded = false;
 
   // ฟังก์ชันสำหรับแปลง severity จาก int เป็นข้อความ

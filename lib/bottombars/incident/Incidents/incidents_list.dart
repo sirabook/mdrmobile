@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'incident_card.dart';
-import 'incident_filter.dart';
+import 'incidents_card.dart';
+import 'incidents_filter.dart';
 
-class IncidentList extends StatefulWidget {
+class IncidentsList extends StatefulWidget {
   final int? selectedDays;
   final DateTime? selectedStartDate;
   final DateTime? selectedEndDate;
 
-  const IncidentList({
+  const IncidentsList({
     Key? key,
     this.selectedDays,
     this.selectedStartDate,
@@ -16,10 +16,10 @@ class IncidentList extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _IncidentListState createState() => _IncidentListState();
+  _IncidentsListState createState() => _IncidentsListState();
 }
 
-class _IncidentListState extends State<IncidentList> {
+class _IncidentsListState extends State<IncidentsList> {
   // ใช้ -1 แทนตัวเลือก All
   int selectedEntries = 25; 
   String searchQuery = "";
@@ -95,7 +95,7 @@ class _IncidentListState extends State<IncidentList> {
       body: Column(
         children: [
           // ปุ่ม filter "All Incident", "Generated XDR Agent", "Generated PAN NGFW"
-          IncidentFilter(
+          IncidentsFilter(
             selectedFilter: selectedFilter,
             onFilterChanged: (filter) => setState(() => selectedFilter = filter),
           ),
@@ -136,7 +136,7 @@ class _IncidentListState extends State<IncidentList> {
                     itemBuilder: (context, index) {
                       final data = filteredIncidents[index].data()
                           as Map<String, dynamic>;
-                      return IncidentCard(data: data);
+                      return IncidentsCard(data: data);
                     },
                   );
                 },

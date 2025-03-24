@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class IncidentFilter extends StatelessWidget {
+class IncidentsFilter extends StatelessWidget {
   final int selectedFilter;
   final Function(int) onFilterChanged;
 
-  const IncidentFilter({
+  const IncidentsFilter({
     Key? key,
     required this.selectedFilter,
     required this.onFilterChanged,

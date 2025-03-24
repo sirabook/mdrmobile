@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:mdr_mobile/bottombars/incidents/incident_page.dart';
+import 'package:mdr_mobile/bottombars/incident/incident_page.dart';
 import 'package:mdr_mobile/bottombars/managements/management_page.dart';
 import 'package:mdr_mobile/bottombars/home/home_page.dart';
 import 'package:mdr_mobile/bottombars/news/news_page.dart';
@@ -35,6 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int notificationCount = 0;
   int _selectedIndex = 0;
   int _homeSubPageIndex = 0; // 0: Dashboard, 1: Endpoint
+  int _managementSubPageIndex = 0; // 0: Dashboard, 1: Endpoint
+  int _incidentSubPageIndex = 0; // 0: Dashboard, 1: Endpoint
   int _newsSubPageIndex = 1; // 0: Dashboard, 1: Endpoint
 
   // List สำหรับเก็บข้อความแจ้งเตือน
@@ -122,9 +124,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         return HomePage(key: _homePageKey, subPageIndex: _homeSubPageIndex);
       case 1:
-        return ManagementPage(key: _managementPageKey);
+        return ManagementPage(key: _managementPageKey, subPageIndex: _managementSubPageIndex);
       case 2:
-        return IncidentPage(key: _incidentPageKey);
+        return IncidentPage(key: _incidentPageKey, subPageIndex: _incidentSubPageIndex);
       case 3:
         return NewsPage(key: _newsPageKey, subPageIndex: _newsSubPageIndex);
       default:
@@ -136,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _handleMenuItemTap(String item) {
     Navigator.pop(context); // ปิด Drawer
     // กรณีที่อยู่ในหน้า Home ให้เปลี่ยน subPageIndex
-    if (_selectedIndex == 0) {
+    if (_selectedIndex == 0) {  //Home
       if (item == "Dashboard") {
         setState(() {
           _homeSubPageIndex = 0;
@@ -146,15 +148,19 @@ class _MyHomePageState extends State<MyHomePage> {
           _homeSubPageIndex = 1;
         });
       }
-    } else if (_selectedIndex == 1) {
+    } else if (_selectedIndex == 1) {  //Management
       if (item == "Tenant") {
-        print("Scroll to Tenant in ManagementPage");
+        setState(() {
+          _managementSubPageIndex = 0;
+        });
       }
-    } else if (_selectedIndex == 2) {
+    } else if (_selectedIndex == 2) { //Incident
       if (item == "Incidents") {
-        print("Scroll to Incident in Incidents");
+       setState(() {
+          _incidentSubPageIndex = 0;
+        });
       }
-    } else if (_selectedIndex == 3) {
+    } else if (_selectedIndex == 3) { //News
       if (item == "Threat Intelligence") {
         setState(() {
           _newsSubPageIndex = 0;

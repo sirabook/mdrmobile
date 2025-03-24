@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mdr_mobile/bottombars/days_filter.dart';
-import 'package:mdr_mobile/bottombars/incidents/incident_list.dart';
+import 'package:mdr_mobile/bottombars/incident/Incidents/incidents_list.dart';
 
-class IncidentPage extends StatefulWidget {
-  const IncidentPage({Key? key}) : super(key: key);
+class IncidentsPage extends StatefulWidget {
+  const IncidentsPage({Key? key}) : super(key: key);
 
   @override
-  _IncidentPageState createState() => _IncidentPageState();
+  _IncidentsPageState createState() => _IncidentsPageState();
 }
 
-class _IncidentPageState extends State<IncidentPage> {
+class _IncidentsPageState extends State<IncidentsPage> {
   int? selectedDays = 1;
   DateTime? selectedStartDate;
   DateTime? selectedEndDate;
@@ -67,7 +67,7 @@ class _IncidentPageState extends State<IncidentPage> {
                     
                     SizedBox(
                       height: constraints.maxHeight, // ป้องกัน Overflow
-                      child: IncidentList(
+                      child: IncidentsList(
                         selectedDays: selectedDays,
                         selectedStartDate: selectedStartDate,
                         selectedEndDate: selectedEndDate,
